@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23171614'/%3E%3Ccircle cx='16' cy='16' r='6.5' fill='%23d8a85a'/%3E%3C/svg%3E" />
+<title>Used Car Inspection Guide — Pick a direction</title>
+<meta name="description" content="Four complete design directions for the Used Car Inspection Guide storefront. Compare and pick one." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:      oklch(0.165 0.006 60);
+    --bg-2:    oklch(0.205 0.007 58);
+    --card:    oklch(0.225 0.008 58);
+    --line:    oklch(0.33 0.008 58);
+    --ink:     oklch(0.95 0.008 75);
+    --muted:   oklch(0.70 0.012 70);
+    --faint:   oklch(0.56 0.012 68);
+    --accent:  oklch(0.80 0.10 72);
+    --f:       "Hanken Grotesk", system-ui, -apple-system, sans-serif;
+    --m:       "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    --ease:    cubic-bezier(.16,1,.3,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--f);line-height:1.6;
+    font-size:16px;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(ellipse 80% 50% at 50% -10%,oklch(0.26 0.02 70 / .5),transparent 70%)}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1240px;margin-inline:auto;padding:clamp(28px,5vw,72px)}
+  .mono{font-family:var(--m);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+
+  header.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:32px;
+    padding-bottom:var(--s,40px);border-bottom:1px solid var(--line);margin-bottom:56px}
+  header.top h1{font-size:clamp(2rem,4.4vw,3.4rem);font-weight:700;letter-spacing:-.025em;line-height:1.06;max-width:16ch}
+  header.top h1 span{color:var(--accent)}
+  header.top .lead{max-width:46ch;color:var(--muted);margin-top:18px;font-size:1.02rem}
+  header.top .meta{font-family:var(--m);font-size:.74rem;color:var(--faint);line-height:2;text-align:right}
+  header.top .meta a{color:var(--ink);border-bottom:1px solid var(--line);padding-bottom:2px;transition:.3s var(--ease)}
+  header.top .meta a:hover{border-color:var(--accent);color:var(--accent)}
+  @media(max-width:760px){header.top .meta{text-align:left}}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+  @media(max-width:880px){.grid{grid-template-columns:1fr;max-width:560px;margin-inline:auto}}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;
+    display:flex;flex-direction:column;transition:transform .5s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease)}
+  .card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 30px 60px -34px oklch(0 0 0 / .8)}
+  .thumb{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--bg-2);border-bottom:1px solid var(--line)}
+  .thumb img{width:100%;height:100%;object-fit:cover;object-position:top left;
+    transition:transform .8s var(--ease);filter:saturate(1.02)}
+  .card:hover .thumb img{transform:scale(1.045)}
+  .thumb .tag{position:absolute;top:14px;left:14px;font-family:var(--m);font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink);background:oklch(0.16 0.01 60 / .8);backdrop-filter:blur(6px);
+    padding:6px 11px;border-radius:999px;border:1px solid oklch(1 0 0 / .12)}
+  .body{padding:26px 26px 28px;display:flex;flex-direction:column;flex:1}
+  .body .nm{font-size:1.5rem;font-weight:700;letter-spacing:-.01em}
+  .body .traits{font-family:var(--m);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-top:8px}
+  .body p{color:var(--muted);font-size:.95rem;margin-top:14px;flex:1}
+  .body .feat{list-style:none;margin:18px 0 24px;display:flex;flex-direction:column;gap:8px}
+  .body .feat li{font-size:.86rem;color:var(--faint);display:flex;gap:10px}
+  .body .feat li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-top:8px}
+  .open{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    font-family:var(--m);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
+    padding:15px 20px;border-radius:10px;background:var(--bg-2);border:1px solid var(--line);
+    transition:.4s var(--ease)}
+  .open:hover{background:var(--accent);color:oklch(0.18 0.02 60);border-color:var(--accent)}
+  .open svg{transition:transform .4s var(--ease)}
+  .open:hover svg{transform:translateX(5px)}
+
+  footer{margin-top:64px;padding-top:32px;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;
+    font-family:var(--m);font-size:.72rem;color:var(--faint);letter-spacing:.04em}
+  footer b{color:var(--muted);font-weight:500}
+
+  .card{opacity:0;transform:translateY(28px)}
+  .card.in{opacity:1;transform:none;transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  @media (prefers-reduced-motion: reduce){.card{opacity:1;transform:none}.card:hover{transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <div class="mono" style="margin-bottom:18px">Used Car Inspection Guide · storefront</div>
+      <h1>Four directions. <span>Pick one.</span></h1>
+      <p class="lead">Same product, same story, same $6.99 — built four different ways, now driven by real photography. Open each, scroll the full experience, then choose the world this guide should live in.</p>
+    </div>
+    <div class="meta">
+      11 checkpoints · $6.99 · Wish<br />
+      <a href="assets/used-car-inspection-guide.pdf" target="_blank" rel="noopener">↓ Sample PDF</a><br />
+      Photography via Unsplash (free)
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <article class="card">
+      <a class="thumb" href="cinematic.html" aria-label="Open the Cinematic Showroom variation">
+        <span class="tag">A · Dark · Photo</span>
+        <img src="assets/previews/cinematic.jpeg" alt="Cinematic Showroom variation preview" loading="lazy" />
+      </a>
+      <div class="body">
+        <div class="nm">Cinematic Showroom</div>
+        <div class="traits">Premium · dramatic · weighty</div>
+        <p>A luxury car launch. High-contrast serif display over real photography, a pinned walkaround that cross-fades through the inspection.</p>
+        <ul class="feat">
+          <li>Libre Caslon Display · photo walkaround</li>
+          <li>Deep charcoal &amp; headlight gold</li>
+          <li>Best showcase for the storytelling</li>
+        </ul>
+        <a class="open" href="cinematic.html">Open variation
+          <svg width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M1 6h17M13 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <article class="card">
+      <a class="thumb" href="cinematic-3d.html" aria-label="Open the Interactive 3D Showroom variation">
+        <span class="tag">D · Dark · 3D</span>
+        <img src="assets/previews/cinematic-3d.jpeg" alt="Interactive 3D Showroom variation preview" loading="lazy" />
+      </a>
+      <div class="body">
+        <div class="nm">Interactive 3D Showroom</div>
+        <div class="traits">Immersive · interactive · live</div>
+        <p>The cinematic world, but the hero is a real 3D car you can orbit — drag to spin it over the photographic backdrop. Photos drive the rest.</p>
+        <ul class="feat">
+          <li>Sketchfab 3D hero · drag to rotate</li>
+          <li>Graceful photo fallback if offline</li>
+          <li>Highest wow-factor · needs internet</li>
+        </ul>
+        <a class="open" href="cinematic-3d.html">Open variation
+          <svg width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M1 6h17M13 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <article class="card">
+      <a class="thumb" href="blueprint.html" aria-label="Open the Garage Blueprint variation">
+        <span class="tag">B · Dark · Photo</span>
+        <img src="assets/previews/blueprint.jpeg" alt="Garage Blueprint variation preview" loading="lazy" />
+      </a>
+      <div class="body">
+        <div class="nm">Garage Blueprint</div>
+        <div class="traits">Technical · precise · expert</div>
+        <p>An engineer's schematic. Duotone cyanotype photography on a grid, a crosshair that targets each checkpoint — inspection as a procedure.</p>
+        <ul class="feat">
+          <li>Saira + Martian Mono · duotone photos</li>
+          <li>Blueprint navy &amp; signal amber</li>
+          <li>Most distinctive &amp; ownable</li>
+        </ul>
+        <a class="open" href="blueprint.html">Open variation
+          <svg width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M1 6h17M13 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <article class="card">
+      <a class="thumb" href="editorial.html" aria-label="Open the Trustworthy Editorial variation">
+        <span class="tag">C · Light · Photo</span>
+        <img src="assets/previews/editorial.jpeg" alt="Trustworthy Editorial variation preview" loading="lazy" />
+      </a>
+      <div class="body">
+        <div class="nm">Trustworthy Editorial</div>
+        <div class="traits">Calm · honest · readable</div>
+        <p>A consumer-report field guide. Slab headlines, serif body, warm-print photo plates, generous light space — credibility first.</p>
+        <ul class="feat">
+          <li>Bitter + Source Serif 4 · photo plates</li>
+          <li>Warm paper &amp; oxblood accent</li>
+          <li>Highest-converting / lowest-risk</li>
+        </ul>
+        <a class="open" href="editorial.html">Open variation
+          <svg width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M1 6h17M13 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </article>
+
+  </div>
+
+  <footer>
+    <span><b>Payment:</b> Wish — placeholder, wire it in one spot per page (<code>data-payment="wish"</code> → <code>#checkout</code>)</span>
+    <span><b>Deliverable:</b> assets/used-car-inspection-guide.pdf — sample, replace before launch</span>
+    <span><b>Credits:</b> photography via Unsplash (free) · 3D “1975 Porsche 911 (930) Turbo” by Lionsharp Studios, CC BY 4.0 · Sketchfab</span>
+  </footer>
+
+</div>
+<script>
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.15});
+  document.querySelectorAll(".card").forEach((c,i)=>{c.style.transitionDelay=(i*90)+"ms";io.observe(c);});
+</script>
+</body>
+</html>

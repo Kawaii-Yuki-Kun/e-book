@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23171614'/%3E%3Ccircle cx='16' cy='16' r='6.5' fill='%23d8a85a'/%3E%3C/svg%3E" />
+<title>Used Car Inspection Guide — Don't buy someone else's problem (3D)</title>
+<meta name="description" content="An interactive walkaround of a used car: orbit the 3D model, then run the 11 checkpoints, the red flags that mean walk away, and the renegotiation scripts. $6.99." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:        oklch(0.158 0.012 62);
+    --bg-2:      oklch(0.198 0.014 60);
+    --surface:   oklch(0.225 0.015 58);
+    --line:      oklch(0.34 0.014 58);
+    --ink:       oklch(0.945 0.012 78);
+    --muted:     oklch(0.70 0.018 72);
+    --faint:     oklch(0.55 0.016 70);
+    --gold:      oklch(0.80 0.122 76);
+    --gold-deep: oklch(0.66 0.118 64);
+    --danger:    oklch(0.66 0.17 32);
+
+    --f-display: "Libre Caslon Display", "Hoefler Text", Georgia, serif;
+    --f-body:    "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --f-mono:    "Spline Sans Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px;
+    --s-6:32px; --s-7:48px; --s-8:64px; --s-9:96px; --s-10:144px;
+    --maxw:1200px;
+    --ease: cubic-bezier(.16,1,.3,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:var(--f-body); font-size:clamp(16px,1.05vw,18px);
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--gold);color:oklch(0.18 0.02 60)}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{font-family:var(--f-display);font-weight:400;line-height:1.04;letter-spacing:-.01em}
+  .mono{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+  .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(20px,5vw,72px)}
+  .lede{max-width:62ch}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed;inset:0 0 auto 0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px clamp(20px,5vw,72px);
+    transition:background .5s var(--ease),backdrop-filter .5s;
+  }
+  nav.scrolled{background:color-mix(in oklab,var(--bg) 78%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid color-mix(in oklab,var(--line) 50%,transparent)}
+  .brand{font-family:var(--f-display);font-size:1.15rem;letter-spacing:.01em}
+  .brand b{color:var(--gold);font-weight:400}
+  .nav-cta{
+    font-family:var(--f-mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    border:1px solid var(--line);padding:10px 18px;border-radius:999px;
+    color:var(--ink);transition:.35s var(--ease);
+  }
+  .nav-cta:hover{border-color:var(--gold);color:var(--gold)}
+  @media(max-width:640px){.nav-cta{display:none}}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden}
+  .hero-3d{position:absolute;inset:0;z-index:0;background:oklch(0.135 0.012 62);
+    background-image:linear-gradient(oklch(0.135 0.012 62 / .35),oklch(0.135 0.012 62 / .35)),
+      url("assets/img/hero.jpg");
+    background-size:cover;background-position:62% 62%}
+  .hero-3d iframe{width:100%;height:100%;border:0;display:block;position:relative;z-index:1}
+  .hero-scrim{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(98deg,
+        oklch(0.135 0.012 62 / .88) 0%, oklch(0.145 0.012 62 / .58) 32%,
+        oklch(0.158 0.012 62 / .16) 56%, transparent 86%),
+      linear-gradient(180deg,
+        oklch(0.135 0.012 62 / .50) 0%, transparent 22%,
+        transparent 58%, oklch(0.135 0.012 62 / .82) 100%);
+  }
+  /* let drags reach the 3D viewer; keep links/buttons clickable */
+  .hero-inner{pointer-events:none}
+  .hero-inner a,.hero-inner button{pointer-events:auto}
+  .model-credit{
+    position:absolute;right:clamp(20px,5vw,72px);bottom:22px;z-index:4;
+    font-family:var(--f-mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--faint);max-width:46ch;text-align:right;line-height:1.7;pointer-events:auto;
+  }
+  .model-credit a{color:var(--muted);border-bottom:1px solid color-mix(in oklab,var(--faint) 40%,transparent)}
+  .model-credit a:hover{color:var(--gold)}
+  @media(max-width:680px){.model-credit{display:none}}
+  .hero-glow{
+    position:absolute;left:50%;top:54%;width:120vmin;height:70vmin;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(ellipse at center,oklch(0.78 0.12 76 / .20),transparent 62%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:3;width:100%;padding-block:14svh 0}
+  .kicker{display:flex;align-items:center;gap:14px;margin-bottom:var(--s-5)}
+  .kicker::before{content:"";width:46px;height:1px;background:var(--gold)}
+  h1.title{
+    font-size:clamp(2.9rem,8.2vw,7.4rem);
+    letter-spacing:-.02em;
+  }
+  h1.title em{font-style:italic;color:var(--gold)}
+  .hero p.sub{
+    margin-top:var(--s-5);max-width:46ch;color:var(--muted);
+    font-size:clamp(1.05rem,1.5vw,1.3rem);
+  }
+  .hero-actions{display:flex;flex-wrap:wrap;gap:var(--s-4);align-items:center;margin-top:var(--s-7)}
+  .btn{
+    font-family:var(--f-body);font-weight:600;font-size:1rem;
+    padding:16px 30px;border-radius:999px;cursor:pointer;border:1px solid transparent;
+    transition:transform .4s var(--ease),background .35s,color .35s,border-color .35s;
+    display:inline-flex;align-items:center;gap:12px;
+  }
+  .btn-primary{background:var(--gold);color:oklch(0.20 0.02 60)}
+  .btn-primary:hover{transform:translateY(-3px);background:oklch(0.85 0.12 78)}
+  .btn-primary .price{font-family:var(--f-mono);font-size:.85rem;opacity:.7;border-left:1px solid oklch(0.20 0.02 60 / .35);padding-left:12px}
+  .btn-ghost{border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .scroll-cue{
+    position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:4;
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+    font-family:var(--f-mono);font-size:.64rem;letter-spacing:.28em;color:var(--faint);text-transform:uppercase;
+  }
+  .scroll-cue i{width:1px;height:42px;background:linear-gradient(var(--gold),transparent);animation:cue 2.4s var(--ease) infinite}
+  @keyframes cue{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* ---------- generic section ---------- */
+  section{position:relative}
+  .eyebrow{display:flex;align-items:baseline;gap:14px;margin-bottom:var(--s-5)}
+  .eyebrow .num{font-family:var(--f-mono);font-size:.74rem;color:var(--gold)}
+  .eyebrow .lbl{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--faint)}
+  h2.head{font-size:clamp(2rem,4.6vw,3.6rem);max-width:18ch}
+  h2.head em{font-style:italic;color:var(--gold)}
+
+  /* problem */
+  .problem{padding-block:var(--s-10)}
+  .problem .big{
+    font-family:var(--f-display);font-size:clamp(1.8rem,4.4vw,3.4rem);line-height:1.18;
+    max-width:24ch;
+  }
+  .problem .big u{text-decoration:none;color:var(--gold);font-style:italic}
+  .problem .row{display:grid;grid-template-columns:1.3fr 1fr;gap:var(--s-9);align-items:end;margin-top:var(--s-8)}
+  .problem .aside{color:var(--muted);max-width:38ch;border-top:1px solid var(--line);padding-top:var(--s-5)}
+  @media(max-width:860px){.problem .row{grid-template-columns:1fr;gap:var(--s-6)}}
+
+  /* ---------- evidence strip ---------- */
+  .evidence{padding-block:var(--s-7) var(--s-10)}
+  .evidence .strip{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-5)}
+  @media(max-width:780px){.evidence .strip{grid-template-columns:1fr;gap:var(--s-6)}}
+  .ev{position:relative;border-radius:8px;overflow:hidden;isolation:isolate;background:var(--bg-2)}
+  .ev img{
+    width:100%;height:clamp(280px,34vw,420px);object-fit:cover;display:block;
+    filter:saturate(.86) contrast(1.04);
+    transform:scale(1.02);transition:transform 1.1s var(--ease),filter .6s var(--ease);
+  }
+  .ev:hover img{transform:scale(1.07);filter:saturate(1) contrast(1.06)}
+  .ev::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(180deg,transparent 38%,oklch(0.135 0.012 62 / .82) 100%)}
+  .ev figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:var(--s-5)}
+  .ev figcaption .et{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--danger);display:block;margin-bottom:8px}
+  .ev figcaption b{font-family:var(--f-display);font-weight:400;font-size:clamp(1.15rem,1.9vw,1.5rem);color:var(--ink)}
+  .ev figcaption p{color:var(--muted);font-size:.86rem;margin-top:4px}
+
+  /* ---------- walkaround (pinned) ---------- */
+  .walk-outer{position:relative;height:640svh}
+  .walk-sticky{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;grid-template-columns:1fr 1fr}
+  .walk-photos{position:absolute;inset:0;z-index:0}
+  .walk-photo{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:0;transform:scale(1.07);will-change:opacity,transform;
+    transition:opacity 1.05s var(--ease);
+  }
+  .walk-photo.on{opacity:1;transition:opacity 1.05s var(--ease),transform 7s linear}
+  .walk-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(92deg,
+        oklch(0.135 0.012 62 / .93) 0%, oklch(0.145 0.012 62 / .72) 33%,
+        oklch(0.158 0.012 62 / .26) 60%, transparent 88%),
+      linear-gradient(0deg, oklch(0.135 0.012 62 / .62) 0%, transparent 30%)}
+  .walk-copy{position:relative;z-index:3;align-self:center;padding:0 clamp(24px,5vw,72px);grid-column:1}
+  .walk-step{position:absolute;max-width:30ch;opacity:0;transform:translateY(28px);transition:opacity .6s var(--ease),transform .6s var(--ease);pointer-events:none}
+  .walk-step.on{opacity:1;transform:none;position:relative}
+  .walk-step .idx{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.2em;color:var(--gold);display:block;margin-bottom:14px}
+  .walk-step h3{font-size:clamp(1.9rem,3.6vw,3rem);margin-bottom:var(--s-4)}
+  .walk-step p{color:var(--muted)}
+  .walk-step .kill{margin-top:var(--s-4);font-family:var(--f-mono);font-size:.78rem;color:var(--danger);letter-spacing:.04em}
+  .walk-rail{position:absolute;right:clamp(20px,4vw,52px);top:50%;transform:translateY(-50%);z-index:4;display:flex;flex-direction:column;gap:14px}
+  .walk-rail b{font-family:var(--f-mono);font-size:.68rem;color:var(--faint);writing-mode:vertical-rl;letter-spacing:.2em;margin-bottom:8px}
+  .walk-rail i{width:30px;height:2px;background:var(--line);transition:.4s var(--ease)}
+  .walk-rail i.on{background:var(--gold);width:46px}
+  .walk-hint{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:4;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.26em;color:var(--faint);text-transform:uppercase}
+  @media(max-width:860px){.walk-sticky{grid-template-columns:1fr}.walk-copy{grid-column:1;align-self:flex-end;padding-bottom:18svh}}
+
+  /* ---------- ledger / what's inside ---------- */
+  .inside{padding-block:var(--s-10)}
+  .ledger{margin-top:var(--s-8);border-top:1px solid var(--line)}
+  .lrow{
+    display:grid;grid-template-columns:64px 1fr auto;gap:var(--s-5);align-items:baseline;
+    padding:var(--s-5) 0;border-bottom:1px solid var(--line);
+    transition:background .4s var(--ease),padding-left .4s var(--ease);
+  }
+  .lrow:hover{background:color-mix(in oklab,var(--surface) 60%,transparent);padding-left:14px}
+  .lrow .n{font-family:var(--f-mono);color:var(--gold);font-size:.85rem}
+  .lrow h4{font-family:var(--f-display);font-size:clamp(1.2rem,2vw,1.6rem);font-weight:400}
+  .lrow p{color:var(--faint);font-size:.92rem;margin-top:4px;max-width:52ch}
+  .lrow .tag{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+
+  /* ---------- sample preview ---------- */
+  .sample{padding-block:var(--s-10);background:linear-gradient(180deg,transparent,var(--bg-2) 30%,var(--bg-2) 70%,transparent)}
+  .sample .grid{display:grid;grid-template-columns:1fr 1.05fr;gap:var(--s-9);align-items:center;margin-top:var(--s-7)}
+  @media(max-width:900px){.sample .grid{grid-template-columns:1fr;gap:var(--s-7)}}
+  .sheet{
+    background:oklch(0.96 0.01 86);color:oklch(0.24 0.02 60);
+    border-radius:6px;padding:clamp(22px,3vw,36px);
+    box-shadow:0 40px 90px -40px oklch(0 0 0 / .7);
+    transform:rotate(-1.4deg);transition:transform .6s var(--ease);
+    font-size:.86rem;
+  }
+  .sheet:hover{transform:rotate(0)}
+  .sheet .sh-top{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid oklch(0.24 0.02 60);padding-bottom:12px;margin-bottom:16px}
+  .sheet .sh-top b{font-family:var(--f-display);font-size:1.25rem}
+  .sheet .sh-top span{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:oklch(0.45 0.02 60)}
+  .sheet ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .sheet li{display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center;padding-bottom:9px;border-bottom:1px dashed oklch(0.78 0.02 70)}
+  .sheet li span:first-child{font-weight:600}
+  .sheet .mk{font-family:var(--f-mono);font-size:.6rem;width:30px;text-align:center;padding:3px 0;border:1px solid oklch(0.55 0.02 60);border-radius:3px;color:oklch(0.42 0.02 60)}
+  .sheet .mk.p{background:oklch(0.78 0.12 150 / .25);border-color:oklch(0.5 0.12 150);color:oklch(0.38 0.12 150)}
+  .sheet .mk.f{background:oklch(0.7 0.16 32 / .22);border-color:oklch(0.55 0.16 32);color:oklch(0.46 0.16 32)}
+
+  /* ---------- proof ---------- */
+  .proof{padding-block:var(--s-10)}
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-6);margin-top:var(--s-8)}
+  @media(max-width:860px){.quotes{grid-template-columns:1fr}}
+  blockquote{font-family:var(--f-display);font-size:1.3rem;line-height:1.4}
+  blockquote::before{content:"\201C";color:var(--gold);font-size:2.4rem;line-height:0;vertical-align:-.35em;margin-right:4px}
+  .quotes figcaption{margin-top:var(--s-4);font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+
+  /* ---------- pricing / checkout ---------- */
+  .price-sec{padding-block:var(--s-10)}
+  .pricecard{
+    position:relative;border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    background:linear-gradient(160deg,var(--surface),var(--bg-2));
+    display:grid;grid-template-columns:1.15fr 1fr;
+  }
+  @media(max-width:860px){.pricecard{grid-template-columns:1fr}}
+  .pricecard .left{padding:clamp(28px,4vw,56px);border-right:1px solid var(--line)}
+  @media(max-width:860px){.pricecard .left{border-right:none;border-bottom:1px solid var(--line)}}
+  .pricecard h3{font-size:clamp(1.8rem,3.4vw,2.8rem)}
+  .pricecard .inc{list-style:none;margin-top:var(--s-6);display:flex;flex-direction:column;gap:14px}
+  .pricecard .inc li{display:flex;gap:14px;color:var(--muted);font-size:.96rem}
+  .pricecard .inc li::before{content:"";flex:none;width:18px;height:18px;border-radius:50%;border:1px solid var(--gold);background:radial-gradient(circle at 50% 50%,var(--gold) 0 30%,transparent 32%);margin-top:3px}
+  .pricecard .right{padding:clamp(28px,4vw,56px);display:flex;flex-direction:column;justify-content:center;gap:var(--s-5);background:color-mix(in oklab,var(--bg) 40%,transparent)}
+  .amount{display:flex;align-items:flex-start;gap:6px;font-family:var(--f-display)}
+  .amount sup{font-size:1.4rem;margin-top:.7rem;color:var(--muted)}
+  .amount b{font-size:clamp(3.4rem,8vw,5.4rem);font-weight:400;line-height:1}
+  .amount span{align-self:flex-end;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:.7rem}
+  .pay-note{font-family:var(--f-mono);font-size:.72rem;color:var(--faint);line-height:1.7}
+  .pay-note b{color:var(--gold);font-weight:500}
+  .guarantee{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.86rem}
+  .guarantee::before{content:"";width:8px;height:8px;border-radius:50%;background:oklch(0.78 0.13 150)}
+
+  #checkout{margin-top:var(--s-6);border:1px dashed var(--line);border-radius:14px;padding:0 var(--s-6);
+    display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .55s var(--ease),opacity .45s,padding .45s}
+  #checkout.open{grid-template-rows:1fr;opacity:1;padding:var(--s-6)}
+  #checkout>div{overflow:hidden;min-height:0}
+  #checkout h4{font-family:var(--f-display);font-size:1.4rem;margin-bottom:var(--s-3)}
+  #checkout p{color:var(--muted);font-size:.92rem;max-width:52ch}
+  #checkout .ck-actions{display:flex;flex-wrap:wrap;gap:var(--s-4);margin-top:var(--s-5)}
+  .btn-wish{background:color-mix(in oklab,var(--gold) 22%,transparent);border:1px solid var(--gold);color:var(--gold);cursor:not-allowed;opacity:.85}
+
+  /* ---------- faq ---------- */
+  .faq{padding-block:var(--s-10)}
+  .qa{border-top:1px solid var(--line)}
+  .qa details{border-bottom:1px solid var(--line)}
+  .qa summary{list-style:none;cursor:pointer;padding:var(--s-5) 0;display:flex;justify-content:space-between;gap:var(--s-5);
+    font-family:var(--f-display);font-size:clamp(1.15rem,2vw,1.5rem);align-items:center}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary i{flex:none;width:26px;height:26px;border:1px solid var(--line);border-radius:50%;position:relative;transition:.4s var(--ease)}
+  .qa summary i::before,.qa summary i::after{content:"";position:absolute;inset:50% 7px auto;height:1px;background:var(--gold);transform:translateY(-50%)}
+  .qa summary i::after{transform:translateY(-50%) rotate(90deg)}
+  .qa details[open] summary i{transform:rotate(135deg);border-color:var(--gold)}
+  .qa .ans{color:var(--muted);max-width:64ch;padding-bottom:var(--s-5);font-size:.96rem}
+
+  /* ---------- footer ---------- */
+  footer{padding-block:var(--s-9) var(--s-7);border-top:1px solid var(--line);position:relative;overflow:hidden}
+  .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--s-6);position:relative;z-index:2}
+  .foot-mark{font-family:var(--f-display);font-size:clamp(2.4rem,9vw,7rem);line-height:1;color:var(--bg-2);position:absolute;left:clamp(20px,5vw,72px);bottom:-.18em;z-index:1;letter-spacing:-.02em;pointer-events:none}
+  footer small{color:var(--faint);font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em}
+
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:680px){
+    .hero{min-height:92svh;align-items:flex-end}
+    .hero-inner{padding-block:0 14svh}
+    .hero-3d{pointer-events:none}
+    .hero-scrim{background:
+      linear-gradient(180deg, oklch(0.135 0.012 62 / .62) 0%, transparent 30%,
+        oklch(0.135 0.012 62 / .35) 54%, oklch(0.135 0.012 62 / .93) 100%)}
+    .hero-glow{display:none}
+    .scroll-cue{display:none}
+    h1.title{font-size:clamp(2.7rem,12vw,3.6rem)}
+    .hero p.sub{max-width:38ch}
+    .walk-sticky{grid-template-columns:1fr}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none;transition:none}
+    .scroll-cue i{animation:none}
+    .ev img{transform:none}
+    .walk-outer{height:auto}
+    .walk-sticky{position:relative;height:auto;display:block;padding-block:var(--s-9)}
+    .walk-step{position:relative;opacity:1;transform:none;margin-block:var(--s-8);max-width:48ch}
+    .walk-photos{position:sticky;top:10vh;height:58vh;border-radius:8px;overflow:hidden}
+    .walk-photo{transition:none}
+    .walk-photo.on{transform:scale(1.01)}
+    .walk-scrim{display:none}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="brand" href="#top">Under&nbsp;the&nbsp;<b>Hood</b></a>
+  <a class="nav-cta" href="#price">Get the guide — $6.99</a>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-3d">
+    <iframe title="Interactive 3D car — drag to orbit"
+      src="https://sketchfab.com/models/8568d9d14a994b9cae59499f0dbed21e/embed?autospin=0.2&autostart=1&preload=1&transparent=1&ui_infos=0&ui_stop=0&ui_theme=dark&scrollwheel=0&dnt=1"
+      allow="autoplay; fullscreen; xr-spatial-tracking; accelerometer; gyroscope; magnetometer" allowfullscreen
+      loading="eager" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="hero-glow"></div>
+  <p class="model-credit">
+    Drag to orbit · 3D:
+    <a href="https://sketchfab.com/3d-models/free-1975-porsche-911-930-turbo-8568d9d14a994b9cae59499f0dbed21e" target="_blank" rel="noopener">1975 Porsche 911 (930) Turbo</a>
+    by <a href="https://sketchfab.com/lionsharp" target="_blank" rel="noopener">Lionsharp Studios</a>
+    · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> · Sketchfab
+  </p>
+  <div class="hero-inner wrap">
+    <div class="kicker mono" data-px="0.10">The 12-minute walkaround</div>
+    <h1 class="title">
+      <span data-px="0.05">Don't buy</span><br />
+      <span data-px="0.14">someone else's</span><br />
+      <em data-px="0.22">problem.</em>
+    </h1>
+    <p class="sub" data-px="0.08">A used car hides its history well. This guide hands you the exact checks, in order, that a seller is hoping you'll skip.</p>
+    <div class="hero-actions" data-px="0.05">
+      <a class="btn btn-primary" href="#price">Get the guide <span class="price">$6.99</span></a>
+      <a class="btn btn-ghost" href="#walk">See how it works</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><i></i></div>
+</header>
+
+<section class="problem wrap">
+  <div class="eyebrow"><span class="num">01</span><span class="lbl">The gap</span></div>
+  <p class="big reveal">Most buyers inspect a used car for under four minutes. The person selling it has had it for <u>years</u>.</p>
+  <div class="row">
+    <p class="lede reveal" style="color:var(--muted);font-size:clamp(1.1rem,1.7vw,1.4rem);font-family:var(--f-display);line-height:1.4">
+      That asymmetry is the entire game. You're not trying to become a mechanic. You're trying to find the one reason to walk away before you've handed over the money.
+    </p>
+    <p class="aside reveal">A single missed head-gasket, frame repair, or rolled-back odometer costs more than this guide does — by a factor of about a thousand.</p>
+  </div>
+</section>
+
+<section class="evidence wrap">
+  <div class="eyebrow"><span class="num">01·5</span><span class="lbl">What it hides</span></div>
+  <div class="strip">
+    <figure class="ev reveal">
+      <img src="assets/img/oil.jpg" alt="Topping up engine oil under the hood" loading="lazy" decoding="async" />
+      <figcaption>
+        <span class="et">Red flag — fluids</span>
+        <b>Coolant in the oil.</b>
+        <p>A creamy film where it shouldn't be. The single check a seller hopes you skip.</p>
+      </figcaption>
+    </figure>
+    <figure class="ev reveal">
+      <img src="assets/img/underbody.jpg" alt="Underbody view of an engine and transmission pan" loading="lazy" decoding="async" />
+      <figcaption>
+        <span class="et">Red flag — structure</span>
+        <b>Rot under the spray.</b>
+        <p>Fresh undercoat doesn't fix rust — it hides where the frame is already going.</p>
+      </figcaption>
+    </figure>
+    <figure class="ev reveal">
+      <img src="assets/img/docs.jpg" alt="A car key and fob on a plain surface" loading="lazy" decoding="async" />
+      <figcaption>
+        <span class="et">Red flag — paperwork</span>
+        <b>A title that won't match.</b>
+        <p>The VIN, the mileage, the name. Check it before the conversation turns to price.</p>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="walk-outer" id="walk">
+  <div class="walk-sticky">
+    <div class="walk-photos" aria-hidden="true">
+      <img class="walk-photo on" data-ph="0" src="assets/img/hero_alt.jpg" alt="" decoding="async" />
+      <img class="walk-photo" data-ph="1" src="assets/img/exterior.jpg" alt="" decoding="async" />
+      <img class="walk-photo" data-ph="2" src="assets/img/tire.jpg" alt="" decoding="async" />
+      <img class="walk-photo" data-ph="3" src="assets/img/engine.jpg" alt="" decoding="async" />
+      <img class="walk-photo" data-ph="4" src="assets/img/interior.jpg" alt="" decoding="async" />
+      <img class="walk-photo" data-ph="5" src="assets/img/drive.jpg" alt="" decoding="async" />
+    </div>
+    <div class="walk-scrim" aria-hidden="true"></div>
+    <div class="walk-copy">
+      <div class="walk-step" data-step="0">
+        <span class="idx">Stop 01 — Approach</span>
+        <h3>Stand back first.</h3>
+        <p>Before you touch anything, look at the car as one object. Does it sit level? Do the panel gaps line up? A car that's been hit hard rarely goes back together straight.</p>
+        <span class="kill">Walk away if: panel gaps don't match side to side.</span>
+      </div>
+      <div class="walk-step" data-step="1">
+        <span class="idx">Stop 02 — Body &amp; paint</span>
+        <h3>Read the paint in daylight.</h3>
+        <p>Sight down each panel. Overspray, a slightly different shade, or orange-peel texture on one door means a repaint — and a repaint means a story the seller hasn't told you.</p>
+        <span class="kill">Walk away if: fresh undercoat hides "rust-free."</span>
+      </div>
+      <div class="walk-step" data-step="2">
+        <span class="idx">Stop 03 — Tires &amp; brakes</span>
+        <h3>The tires confess.</h3>
+        <p>Uneven wear means alignment, suspension, or frame. Tires from four different weeks on the same car means corners were cut everywhere else too.</p>
+        <span class="kill">Walk away if: inner-edge wear plus vague steering.</span>
+      </div>
+      <div class="walk-step" data-step="3">
+        <span class="idx">Stop 04 — Under the hood</span>
+        <h3>Open it cold.</h3>
+        <p>A creamy film under the oil cap is coolant where it shouldn't be. A spotless engine on a high-mileage car is usually hiding a fresh leak someone just scrubbed off.</p>
+        <span class="kill">Walk away if: mayonnaise under the oil cap.</span>
+      </div>
+      <div class="walk-step" data-step="4">
+        <span class="idx">Stop 05 — Interior &amp; VIN</span>
+        <h3>Match the story.</h3>
+        <p>Worn pedals and a polished steering wheel on a "low-mileage" car don't agree. Check every VIN against the title before the conversation turns to price.</p>
+        <span class="kill">Walk away if: the VIN plate looks disturbed.</span>
+      </div>
+      <div class="walk-step" data-step="5">
+        <span class="idx">Stop 06 — The test drive</span>
+        <h3>Drive it like you'll own it.</h3>
+        <p>Cold start, windows down, radio off. Listen. Brake hard once on an empty road. Let go of the wheel briefly on a straight. The car will tell you everything if you stop talking.</p>
+        <span class="kill">Walk away if: it pulls, shudders, or knocks under load.</span>
+      </div>
+    </div>
+    <div class="walk-rail" aria-hidden="true">
+      <b>Walkaround</b>
+      <i data-dot="0" class="on"></i><i data-dot="1"></i><i data-dot="2"></i><i data-dot="3"></i><i data-dot="4"></i><i data-dot="5"></i>
+    </div>
+    <div class="walk-hint">Keep scrolling — you're walking around the car</div>
+  </div>
+</section>
+
+<section class="inside wrap" id="inside">
+  <div class="eyebrow"><span class="num">02</span><span class="lbl">What's inside</span></div>
+  <h2 class="head reveal">Eleven checkpoints. <em>One</em> verdict.</h2>
+  <div class="ledger">
+    <div class="lrow reveal"><span class="n">01</span><div><h4>Documents &amp; VIN</h4><p>Title, registration, and every VIN on the car cross-checked before anything else.</p></div><span class="tag">5 min</span></div>
+    <div class="lrow reveal"><span class="n">02</span><div><h4>Body &amp; paint</h4><p>Panel gaps, repaint tells, filler, and the signs of a car that's been straightened.</p></div><span class="tag">3 min</span></div>
+    <div class="lrow reveal"><span class="n">03</span><div><h4>Glass &amp; lights</h4><p>Mismatched glass dates, fogged housings, and what a cracked windshield really signals.</p></div><span class="tag">2 min</span></div>
+    <div class="lrow reveal"><span class="n">04</span><div><h4>Tires &amp; brakes</h4><p>Reading wear patterns like a map of everything the suspension is hiding.</p></div><span class="tag">3 min</span></div>
+    <div class="lrow reveal"><span class="n">05</span><div><h4>Suspension &amp; steering</h4><p>The bounce test, the push test, and the play that means money.</p></div><span class="tag">2 min</span></div>
+    <div class="lrow reveal"><span class="n">06</span><div><h4>Under the hood</h4><p>Belts, hoses, the oil cap, and the over-clean engine that should worry you.</p></div><span class="tag">4 min</span></div>
+    <div class="lrow reveal"><span class="n">07</span><div><h4>Fluids &amp; leaks</h4><p>Color, smell, and level — what each fluid is quietly telling you.</p></div><span class="tag">3 min</span></div>
+    <div class="lrow reveal"><span class="n">08</span><div><h4>Cold start &amp; idle</h4><p>The single most revealing 30 seconds of the entire inspection.</p></div><span class="tag">1 min</span></div>
+    <div class="lrow reveal"><span class="n">09</span><div><h4>Underbody &amp; rust</h4><p>Where rot actually starts, and the repairs people hide with spray.</p></div><span class="tag">3 min</span></div>
+    <div class="lrow reveal"><span class="n">10</span><div><h4>Interior &amp; electronics</h4><p>Wear that contradicts the odometer, plus every switch tested in 90 seconds.</p></div><span class="tag">3 min</span></div>
+    <div class="lrow reveal"><span class="n">11</span><div><h4>The test drive</h4><p>A repeatable route that surfaces transmission, brake, and alignment faults.</p></div><span class="tag">12 min</span></div>
+  </div>
+</section>
+
+<section class="sample wrap" id="sample">
+  <div class="grid">
+    <div class="reveal">
+      <div class="eyebrow"><span class="num">03</span><span class="lbl">See it first</span></div>
+      <h2 class="head">Not theory. <em>A sheet you carry.</em></h2>
+      <p class="lede" style="color:var(--muted);margin-top:var(--s-5)">Every checkpoint becomes a line you mark <b style="color:var(--ink)">Pass</b>, <b style="color:var(--ink)">Note</b>, or <b style="color:var(--ink)">Fail</b> while you're standing at the car. Download the sample and read it before you decide.</p>
+      <a class="btn btn-ghost" style="margin-top:var(--s-6)" href="assets/used-car-inspection-guide.pdf" target="_blank" rel="noopener">Download free sample (PDF)</a>
+    </div>
+    <div class="sheet reveal" aria-hidden="true">
+      <div class="sh-top"><b>Engine bay</b><span>Checkpoint 06 · score sheet</span></div>
+      <ul>
+        <li><span>Oil cap underside — clean?</span><i class="mk p">P</i><i class="mk">N</i><i class="mk">F</i></li>
+        <li><span>Coolant color &amp; level</span><i class="mk">P</i><i class="mk">N</i><i class="mk f">F</i></li>
+        <li><span>Belts &amp; hoses condition</span><i class="mk p">P</i><i class="mk">N</i><i class="mk">F</i></li>
+        <li><span>Visible leaks at seals</span><i class="mk">P</i><i class="mk">N</i><i class="mk f">F</i></li>
+        <li><span>Transmission fluid (pink?)</span><i class="mk p">P</i><i class="mk">N</i><i class="mk">F</i></li>
+        <li><span>Over-cleaned engine bay</span><i class="mk">P</i><i class="mk">N</i><i class="mk f">F</i></li>
+      </ul>
+      <p style="margin-top:16px;font-family:var(--f-mono);font-size:.62rem;color:oklch(0.5 0.02 60);letter-spacing:.06em">VERDICT — 2 FAIL → STOP. RENEGOTIATE OR WALK.</p>
+    </div>
+  </div>
+</section>
+
+<section class="proof wrap">
+  <div class="eyebrow"><span class="num">04</span><span class="lbl">Why people keep it in the glovebox</span></div>
+  <h2 class="head reveal">It pays for itself before you <em>start the engine.</em></h2>
+  <div class="quotes">
+    <figure class="reveal"><blockquote>Found frame repair the listing never mentioned. Walked away in the first two minutes.</blockquote><figcaption>— Replace with a real buyer quote</figcaption></figure>
+    <figure class="reveal"><blockquote>Used the oil-cap check, found coolant in the oil, saved myself a $3,000 mistake.</blockquote><figcaption>— Replace with a real buyer quote</figcaption></figure>
+    <figure class="reveal"><blockquote>Knocked $1,400 off the price using the renegotiation script. The sheet did the talking.</blockquote><figcaption>— Replace with a real buyer quote</figcaption></figure>
+  </div>
+</section>
+
+<section class="price-sec wrap" id="price">
+  <div class="eyebrow"><span class="num">05</span><span class="lbl">Get the guide</span></div>
+  <div class="pricecard reveal">
+    <div class="left">
+      <h3>Used Car Inspection Guide</h3>
+      <p style="color:var(--muted);margin-top:var(--s-3);max-width:42ch">The complete edition — every checkpoint, the red-flag list, the printable score sheet, and the seller scripts.</p>
+      <ul class="inc">
+        <li>11 checkpoints, in the order you run them</li>
+        <li>The "walk away now" red-flag list</li>
+        <li>Printable one-page score sheet</li>
+        <li>Word-for-word renegotiation scripts</li>
+        <li>Yours forever — instant PDF download</li>
+      </ul>
+    </div>
+    <div class="right">
+      <div class="amount"><sup>$</sup><b>6.99</b><span>USD · one-time</span></div>
+      <div class="guarantee">7-day no-questions refund</div>
+      <button class="btn btn-primary" id="buyBtn" data-payment="wish" aria-controls="checkout">Get the guide</button>
+      <p class="pay-note">Secure checkout via <b>Wish</b>. Payment isn't wired up yet — the button below is where it'll go live.</p>
+      <div id="checkout" aria-live="polite">
+        <div>
+          <h4>Pay with Wish</h4>
+          <p>Wish checkout will open here once it's configured. For now, read the free sample so you know exactly what you're getting.</p>
+          <div class="ck-actions">
+            <button class="btn btn-wish" disabled title="Wish payment not configured yet">Wish — coming soon</button>
+            <a class="btn btn-ghost" href="assets/used-car-inspection-guide.pdf" target="_blank" rel="noopener">Read the free sample</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq wrap">
+  <div class="eyebrow"><span class="num">06</span><span class="lbl">Before you ask</span></div>
+  <h2 class="head reveal" style="margin-bottom:var(--s-7)">Reasonable <em>questions.</em></h2>
+  <div class="qa">
+    <details><summary>Do I need any tools or experience?<i></i></summary><div class="ans">No. The whole guide is built around what you can check with your eyes, your hands, a phone flashlight, and a short test drive. No jack, no scanner, no mechanical background assumed.</div></details>
+    <details><summary>Is this specific to one make or country?<i></i></summary><div class="ans">The checkpoints are universal — they're about physics and how cars wear, not a particular brand. Document and title specifics vary by region; the guide explains what to verify so you can apply it locally.</div></details>
+    <details><summary>What format is it, and how do I get it?<i></i></summary><div class="ans">A PDF you can read on a phone or print as a one-page sheet to carry. After checkout you get an instant download — no account, no app.</div></details>
+    <details><summary>What if it doesn't help me?<i></i></summary><div class="ans">7-day refund, no questions. If walking the checkpoints once doesn't make you more confident at the curb, you shouldn't pay for it.</div></details>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-grid wrap" style="padding-inline:0">
+    <div><a class="brand" href="#top">Under the <b>Hood</b></a><br /><small>The 12-minute walkaround.</small></div>
+    <div style="text-align:right"><small>© <span id="yr"></span> · This is a sample storefront.<br />Sample PDF — replace before launch.<br />Photography via Unsplash (free license).<br />Hero 3D: “1975 Porsche 911 (930) Turbo” by Lionsharp Studios — CC BY 4.0 · Sketchfab.</small></div>
+  </div>
+  <div class="foot-mark" aria-hidden="true">INSPECT FIRST</div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  /* ---------- nav ---------- */
+  const nav = document.getElementById("nav");
+  const onScrollNav = () => nav.classList.toggle("scrolled", scrollY > 40);
+  onScrollNav(); addEventListener("scroll", onScrollNav, { passive: true });
+
+  /* ---------- reveal on scroll ---------- */
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: 0.18 });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+  /* ---------- hero text parallax ---------- */
+  const pxEls = [...document.querySelectorAll("[data-px]")].map(el => ({ el, k: parseFloat(el.dataset.px) }));
+  let ticking = false;
+  function parallax() {
+    const y = scrollY;
+    for (const { el, k } of pxEls) el.style.transform = `translate3d(0,${y * k}px,0)`;
+    ticking = false;
+  }
+  if (!REDUCE) addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(parallax); } }, { passive: true });
+
+  /* ---------- walkaround pinned photo cross-fade ---------- */
+  const photos = [...document.querySelectorAll(".walk-photo")];
+  const steps  = [...document.querySelectorAll(".walk-step")];
+  const dots   = [...document.querySelectorAll(".walk-rail i")];
+  const outer  = document.querySelector(".walk-outer");
+  let cur = -1;
+
+  function setStep(i) {
+    if (i === cur) return;
+    cur = i;
+    steps.forEach((s, k) => s.classList.toggle("on", k === i));
+    dots.forEach((d, k) => d.classList.toggle("on", k === i));
+    photos.forEach((p, k) => p.classList.toggle("on", k === i));
+  }
+
+  if (REDUCE) {
+    steps.forEach(s => s.classList.add("on"));
+    photos[0].classList.add("on");
+  } else {
+    setStep(0);
+    let wtick = false;
+    addEventListener("scroll", () => {
+      if (wtick) return;
+      wtick = true;
+      requestAnimationFrame(() => {
+        wtick = false;
+        const r = outer.getBoundingClientRect();
+        const total = outer.offsetHeight - innerHeight;
+        const p = Math.min(1, Math.max(0, -r.top / total));
+        const n = steps.length;
+        setStep(Math.min(n - 1, Math.floor(p * n)));
+      });
+    }, { passive: true });
+  }
+
+  /* ---------- checkout reveal ---------- */
+  const buy = document.getElementById("buyBtn");
+  const ck = document.getElementById("checkout");
+  buy.addEventListener("click", () => {
+    const open = ck.classList.toggle("open");
+    buy.setAttribute("aria-expanded", open);
+    if (open) ck.scrollIntoView({ behavior: REDUCE ? "auto" : "smooth", block: "center" });
+  });
+})();
+</script>
+</body>
+</html>

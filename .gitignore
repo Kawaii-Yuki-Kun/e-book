@@ -1,0 +1,15 @@
+# Playwright MCP artifacts — console logs, page snapshots, screenshots
+# (reports/screenshots Claude generated during QA; not part of the deliverable)
+.playwright-mcp/
+
+# Scratch QA screenshots & preview captures used during development
+qa-*.jpeg
+qa-*.jpg
+qa-*.png
+prev-*.jpeg
+prev-*.jpg
+prev-*.png
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
