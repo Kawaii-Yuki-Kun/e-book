@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%230e7d6e'/%3E%3Cpath d='M5 20c5-7 17-7 22 0' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
+<title>Used Car Inspection Guide — Buy your next car with a clear head</title>
+<meta name="description" content="A calm, flowing field guide to inspecting a used car: 11 checkpoints, the red flags that mean walk away, a printable score sheet. Instant PDF, $6.99." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:     oklch(0.992 0.006 220);
+    --tint:   oklch(0.964 0.022 210);
+    --tint-2: oklch(0.945 0.03 195);
+    --card:   oklch(1 0 0);
+    --line:   oklch(0.90 0.015 215);
+    --ink:    oklch(0.27 0.035 235);
+    --body:   oklch(0.42 0.028 230);
+    --muted:  oklch(0.54 0.024 225);
+    --faint:  oklch(0.63 0.02 222);
+    --teal:   oklch(0.60 0.115 200);
+    --teal-d: oklch(0.52 0.115 200);
+    --lav:    oklch(0.66 0.13 290);
+    --good:   oklch(0.62 0.12 165);
+    --bad:    oklch(0.58 0.17 25);
+
+    --f: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --m: "Spline Sans Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;
+    --s-6:32px;--s-7:48px;--s-8:64px;--s-9:96px;--s-10:128px;
+    --maxw:1140px;
+    --r:28px;
+    --ease:cubic-bezier(.33,1,.45,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--body);font-family:var(--f);
+    font-size:clamp(15.5px,1.02vw,17px);line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--teal);color:#fff}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,h4{color:var(--ink);font-weight:800;line-height:1.12;letter-spacing:-.025em}
+  .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(20px,5vw,52px)}
+  .kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--m);font-size:.72rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--teal);
+    background:color-mix(in oklab,var(--teal) 12%,transparent);padding:7px 15px;border-radius:999px}
+
+  /* curved section system */
+  .band{position:relative}
+  .band.white{background:var(--bg)}
+  .band.tint{background:var(--tint)}
+  .band.tint2{background:var(--tint-2)}
+  .band.ink{background:linear-gradient(160deg,oklch(0.30 0.06 240),oklch(0.22 0.05 250));color:oklch(0.92 0.02 230)}
+  .curve{position:absolute;left:0;width:100%;line-height:0;z-index:1;pointer-events:none}
+  .curve.top{top:-1px}.curve.bot{bottom:-1px}
+  .curve svg{display:block;width:100%;height:clamp(54px,7vw,104px)}
+  .pad{padding-block:clamp(64px,11vw,140px);position:relative;z-index:2}
+
+  nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:.4s var(--ease)}
+  nav .in{display:flex;align-items:center;justify-content:space-between;gap:24px;
+    margin:14px auto;max-width:var(--maxw);padding:10px clamp(16px,3vw,22px);
+    border-radius:999px;transition:.4s var(--ease);
+    margin-inline:clamp(14px,4vw,40px)}
+  nav.scrolled .in{background:color-mix(in oklab,var(--card) 78%,transparent);
+    backdrop-filter:blur(16px) saturate(170%);box-shadow:0 12px 34px -22px oklch(0.3 0.06 235 /.5)}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+  .brand i{width:30px;height:30px;border-radius:50%;flex:none;
+    background:linear-gradient(140deg,var(--teal),var(--lav));display:grid;place-items:center}
+  .brand i::after{content:"";width:15px;height:8px;border:2.5px solid #fff;border-top:none;border-radius:0 0 12px 12px}
+  .nav-cta{font-family:var(--f);font-weight:700;font-size:.86rem;color:#fff;
+    background:linear-gradient(120deg,var(--teal),var(--teal-d));padding:11px 20px;border-radius:999px;
+    box-shadow:0 8px 22px -12px oklch(0.52 0.115 200 /.9);transition:transform .3s var(--ease)}
+  .nav-cta:hover{transform:translateY(-2px)}
+  @media(max-width:560px){.nav-cta{padding:10px 16px;font-size:.8rem}}
+
+  .btn{font-family:var(--f);font-weight:700;font-size:.98rem;padding:15px 30px;border-radius:999px;
+    cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;gap:11px;
+    transition:transform .35s var(--ease),box-shadow .35s,background .3s,border-color .3s}
+  .btn-primary{color:#fff;background:linear-gradient(120deg,var(--teal),var(--lav));
+    box-shadow:0 14px 34px -14px oklch(0.55 0.13 250 /.85)}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 20px 44px -14px oklch(0.55 0.13 250 /.95)}
+  .btn-primary .px{font-family:var(--m);font-size:.82rem;opacity:.78;padding-left:12px;border-left:1px solid oklch(1 0 0 /.35)}
+  .btn-soft{background:var(--card);color:var(--ink);border-color:var(--line);
+    box-shadow:0 8px 22px -16px oklch(0.3 0.06 235 /.5)}
+  .btn-soft:hover{transform:translateY(-3px);border-color:var(--teal);color:var(--teal)}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden}
+  .hero .blob{position:absolute;border-radius:50%;filter:blur(56px);opacity:.5;z-index:0}
+  .hero .blob.a{width:46vw;height:46vw;background:var(--teal);left:-12vw;top:-10vw}
+  .hero .blob.b{width:40vw;height:40vw;background:var(--lav);right:-14vw;top:18vh}
+  .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;
+    gap:clamp(32px,5vw,72px);align-items:center;padding-block:clamp(120px,18vw,180px) clamp(40px,8vw,90px)}
+  @media(max-width:940px){.hero-grid{grid-template-columns:1fr;text-align:center;gap:var(--s-8)}.hero .kicker{margin-inline:auto}}
+  h1.title{font-size:clamp(2.5rem,6vw,4.6rem);font-weight:800;letter-spacing:-.035em;margin-top:var(--s-5)}
+  h1.title .g{background:linear-gradient(115deg,var(--teal),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.sub{margin-top:var(--s-5);max-width:46ch;color:var(--muted);font-size:clamp(1.05rem,1.4vw,1.26rem)}
+  @media(max-width:940px){.hero p.sub{margin-inline:auto}}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:var(--s-4);margin-top:var(--s-7)}
+  @media(max-width:940px){.hero-actions{justify-content:center}}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--s-7)}
+  @media(max-width:940px){.chips{justify-content:center}}
+  .chip{font-size:.82rem;color:var(--body);background:var(--card);border:1px solid var(--line);
+    padding:8px 16px;border-radius:999px;display:flex;align-items:center;gap:8px;
+    box-shadow:0 6px 16px -14px oklch(0.3 0.06 235 /.6)}
+  .chip::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--good)}
+
+  /* book */
+  .book-stage{position:relative;display:grid;place-items:center;min-height:clamp(360px,46svh,520px)}
+  .book-stage::after{content:"";position:absolute;left:50%;bottom:12%;width:60%;height:32px;
+    transform:translateX(-50%);background:radial-gradient(ellipse,oklch(0.45 0.1 240 /.32),transparent 70%);filter:blur(9px)}
+  .scene{perspective:1900px}
+  .book{--bw:clamp(212px,21vw,290px);--bh:calc(var(--bw)*1.4);--bd:40px;
+    position:relative;width:var(--bw);height:var(--bh);transform-style:preserve-3d;
+    transform:rotateX(7deg) rotateY(-27deg);animation:bob 7s var(--ease) infinite alternate}
+  .book>div{position:absolute;border-radius:3px 12px 12px 3px;overflow:hidden}
+  .b-front{inset:0;transform:translateZ(calc(var(--bd)/2));
+    background:radial-gradient(130% 85% at 14% 8%,oklch(1 0 0 /.28),transparent 50%),
+      linear-gradient(155deg,var(--teal),var(--lav));
+    box-shadow:inset 0 0 0 1px oklch(1 0 0 /.18);padding:clamp(20px,2.2vw,28px);
+    display:flex;flex-direction:column;color:#fff}
+  .b-front::before{content:"";position:absolute;left:0;top:0;bottom:0;width:11px;background:linear-gradient(90deg,oklch(1 0 0 /.26),transparent)}
+  .b-front .bk-foil{font-family:var(--m);font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:oklch(1 0 0 /.85)}
+  .b-front .bk-title{font-size:clamp(1.45rem,2.3vw,1.95rem);font-weight:800;line-height:1.06;margin-top:auto;letter-spacing:-.02em}
+  .b-front .bk-sub{font-size:.8rem;color:oklch(1 0 0 /.82);margin-top:9px;line-height:1.5}
+  .b-front .bk-rule{height:1px;background:oklch(1 0 0 /.32);margin:15px 0}
+  .b-front .bk-foot{display:flex;justify-content:space-between;font-family:var(--m);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:oklch(1 0 0 /.78)}
+  .b-front .bk-foot b{color:#fff;font-weight:700}
+  .b-back{inset:0;transform:translateZ(calc(var(--bd)/-2)) rotateY(180deg);background:linear-gradient(155deg,oklch(0.46 0.12 250),oklch(0.36 0.1 230))}
+  .b-spine{left:0;top:0;height:var(--bh);width:var(--bd);transform-origin:left center;
+    transform:rotateY(-90deg) translateX(calc(var(--bd)/-2));background:linear-gradient(var(--bd),oklch(0.52 0.12 235),oklch(0.40 0.1 225))}
+  .b-pages{right:0;top:5px;height:calc(var(--bh) - 10px);width:var(--bd);transform-origin:right center;
+    transform:rotateY(90deg) translateX(calc(var(--bd)/2));
+    background:repeating-linear-gradient(90deg,oklch(0.99 0 0),oklch(0.99 0 0) 1px,oklch(0.86 0.01 220) 2px,oklch(0.99 0 0) 3px)}
+  @keyframes bob{from{transform:rotateX(7deg) rotateY(-27deg) translateY(-7px)}to{transform:rotateX(5deg) rotateY(-20deg) translateY(9px)}}
+
+  h2.head{font-size:clamp(1.9rem,4vw,3rem);font-weight:800;letter-spacing:-.03em;margin-top:var(--s-4);max-width:20ch}
+  h2.head .g{background:linear-gradient(115deg,var(--teal),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{color:var(--muted);margin-top:var(--s-4);font-size:1.08rem;max-width:48ch}
+  .band.ink h2.head,.band.ink .lede{color:#fff}
+  .band.ink .lede{color:oklch(0.86 0.02 230)}
+
+  .twocol{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(28px,5vw,72px);margin-top:var(--s-7);align-items:start}
+  @media(max-width:860px){.twocol{grid-template-columns:1fr;gap:var(--s-6)}}
+  .twocol .big{font-size:clamp(1.5rem,3vw,2.3rem);font-weight:800;color:var(--ink);letter-spacing:-.03em;line-height:1.2}
+  .twocol .big u{text-decoration:none;background:linear-gradient(115deg,var(--teal),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .twocol .note{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:var(--s-6);color:var(--muted);font-size:.96rem;box-shadow:0 16px 40px -34px oklch(0.3 0.06 235 /.6)}
+
+  .checks{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-4);margin-top:var(--s-8)}
+  @media(max-width:880px){.checks{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.checks{grid-template-columns:1fr}}
+  .chk{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:var(--s-6);
+    box-shadow:0 18px 44px -38px oklch(0.3 0.06 235 /.7);transition:transform .4s var(--ease)}
+  .chk:hover{transform:translateY(-5px)}
+  .chk .top{display:flex;justify-content:space-between;align-items:center}
+  .chk .n{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+    background:linear-gradient(140deg,var(--teal),var(--lav));color:#fff;font-family:var(--m);font-size:.78rem;font-weight:500}
+  .chk .t{font-family:var(--m);font-size:.66rem;color:var(--faint)}
+  .chk h4{font-size:1.05rem;margin-top:var(--s-4);font-weight:700}
+  .chk p{color:var(--muted);font-size:.88rem;margin-top:6px}
+
+  .sample-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(30px,5vw,64px);align-items:center;margin-top:var(--s-7)}
+  @media(max-width:880px){.sample-grid{grid-template-columns:1fr;gap:var(--s-7)}}
+  .sheet{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(22px,3vw,34px);
+    box-shadow:0 40px 80px -55px oklch(0.3 0.06 235 /.7)}
+  .sheet .st{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:16px}
+  .sheet .st b{font-size:1.1rem;font-weight:800;color:var(--ink)}
+  .sheet .st span{font-family:var(--m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  .sheet ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .sheet li{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;padding-bottom:11px;border-bottom:1px dashed var(--line)}
+  .sheet li>span:first-child{color:var(--ink);font-size:.92rem}
+  .sheet .mk{font-family:var(--m);font-size:.58rem;width:25px;text-align:center;padding:4px 0;border:1px solid var(--line);border-radius:7px;color:var(--faint)}
+  .sheet .mk.p{border-color:var(--good);color:var(--good);background:oklch(0.62 0.12 165 /.10)}
+  .sheet .mk.f{border-color:var(--bad);color:var(--bad);background:oklch(0.58 0.17 25 /.10)}
+  .sheet .verdict{margin-top:15px;font-family:var(--m);font-size:.66rem;letter-spacing:.05em;color:var(--bad)}
+
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-5);margin-top:var(--s-8)}
+  @media(max-width:860px){.quotes{grid-template-columns:1fr}}
+  .quote{background:oklch(1 0 0 /.10);border:1px solid oklch(1 0 0 /.16);border-radius:22px;padding:var(--s-6);backdrop-filter:blur(8px)}
+  .quote p{font-size:1.02rem;color:#fff;font-weight:600;line-height:1.5}
+  .quote figcaption{margin-top:var(--s-5);font-family:var(--m);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:oklch(0.82 0.02 230)}
+
+  .price-card{display:grid;grid-template-columns:1.1fr 1fr;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--r);overflow:hidden;box-shadow:0 50px 90px -56px oklch(0.3 0.06 235 /.7)}
+  @media(max-width:840px){.price-card{grid-template-columns:1fr}}
+  .price-card .l{padding:clamp(28px,4vw,52px);border-right:1px solid var(--line)}
+  @media(max-width:840px){.price-card .l{border-right:none;border-bottom:1px solid var(--line)}}
+  .price-card h3{font-size:clamp(1.5rem,2.6vw,2rem);font-weight:800}
+  .price-card .inc{list-style:none;margin-top:var(--s-5);display:flex;flex-direction:column;gap:13px}
+  .price-card .inc li{display:flex;gap:12px;color:var(--body);font-size:.97rem}
+  .price-card .inc li svg{flex:none;margin-top:3px;color:var(--teal)}
+  .price-card .r{padding:clamp(28px,4vw,52px);display:flex;flex-direction:column;justify-content:center;gap:var(--s-4);
+    background:linear-gradient(160deg,var(--tint),var(--tint-2))}
+  .amount{display:flex;align-items:flex-start;gap:4px}
+  .amount sup{font-size:1.2rem;font-weight:800;color:var(--muted);margin-top:.5rem}
+  .amount b{font-size:clamp(2.8rem,6vw,4.2rem);font-weight:800;letter-spacing:-.04em;line-height:1;
+    background:linear-gradient(120deg,var(--teal),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .amount span{align-self:flex-end;font-family:var(--m);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:.55rem}
+  .gtee{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:.86rem}
+  .gtee::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--good)}
+  .pay-note{font-family:var(--m);font-size:.7rem;color:var(--faint);line-height:1.7}
+  .pay-note b{color:var(--teal);font-weight:500}
+  #checkout{margin-top:var(--s-3);border:1px dashed var(--line);border-radius:18px;
+    display:grid;grid-template-rows:0fr;opacity:0;padding:0 var(--s-5);
+    transition:grid-template-rows .55s var(--ease),opacity .4s,padding .4s}
+  #checkout.open{grid-template-rows:1fr;opacity:1;padding:var(--s-5)}
+  #checkout>div{overflow:hidden;min-height:0}
+  #checkout h4{font-size:1.05rem;font-weight:800;color:var(--ink);margin-bottom:var(--s-2)}
+  #checkout p{color:var(--muted);font-size:.88rem;max-width:48ch}
+  #checkout .cka{display:flex;flex-wrap:wrap;gap:var(--s-3);margin-top:var(--s-4)}
+  .btn-wish{border:1px solid var(--teal);color:var(--teal);background:color-mix(in oklab,var(--teal) 10%,transparent);cursor:not-allowed;opacity:.85;border-radius:999px}
+
+  .qa{margin-top:var(--s-7);display:flex;flex-direction:column;gap:var(--s-3)}
+  .qa details{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    box-shadow:0 16px 40px -38px oklch(0.3 0.06 235 /.6)}
+  .qa summary{list-style:none;cursor:pointer;padding:var(--s-5) var(--s-6);display:flex;justify-content:space-between;
+    gap:var(--s-5);align-items:center;font-size:clamp(1.02rem,1.6vw,1.18rem);font-weight:700;color:var(--ink)}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary i{flex:none;width:26px;height:26px;border-radius:50%;background:color-mix(in oklab,var(--teal) 14%,transparent);
+    position:relative;transition:.3s var(--ease)}
+  .qa summary i::before,.qa summary i::after{content:"";position:absolute;inset:50% 7px auto;height:2px;background:var(--teal);transform:translateY(-50%);border-radius:2px}
+  .qa summary i::after{transform:translateY(-50%) rotate(90deg)}
+  .qa details[open] summary i{transform:rotate(135deg)}
+  .qa .ans{color:var(--muted);max-width:64ch;padding:0 var(--s-6) var(--s-5);font-size:.96rem}
+
+  footer .pad{padding-block:clamp(48px,8vw,90px) clamp(32px,5vw,52px)}
+  .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s-5);align-items:flex-end}
+  footer small{color:var(--faint);font-family:var(--m);font-size:.7rem;letter-spacing:.03em;line-height:1.9;display:block}
+
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){
+    *{scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none;transition:none}
+    .book{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="in">
+    <a class="brand" href="#top"><i></i> Under the Hood</a>
+    <a class="nav-cta" href="#price">Get the guide — $6.99</a>
+  </div>
+</nav>
+
+<header class="band white hero" id="top">
+  <span class="blob a" aria-hidden="true"></span><span class="blob b" aria-hidden="true"></span>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker">Calm, repeatable, yours forever</span>
+      <h1 class="title">Buy your next car with a <span class="g">clear head.</span></h1>
+      <p class="sub">A flowing, step-by-step inspection that replaces the parking-lot panic with one calm half-hour and a decision you can trust.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#price">Get the guide <span class="px">$6.99</span></a>
+        <a class="btn btn-soft" href="#inside">What's inside</a>
+      </div>
+      <div class="chips">
+        <span class="chip">11 checkpoints</span><span class="chip">~30 min at the car</span><span class="chip">Instant PDF</span>
+      </div>
+    </div>
+    <div class="book-stage" aria-hidden="true">
+      <div class="scene"><div class="book" id="book">
+        <div class="b-front">
+          <span class="bk-foil">Field Guide</span>
+          <div class="bk-title">Used Car<br />Inspection Guide</div>
+          <div class="bk-sub">The calm half-hour that finds the one reason to walk away.</div>
+          <div class="bk-rule"></div>
+          <div class="bk-foot"><span>2nd Edition</span><b>$6.99</b></div>
+        </div>
+        <div class="b-back"></div><div class="b-spine"></div><div class="b-pages"></div>
+      </div></div>
+    </div>
+  </div>
+  <div class="curve bot" aria-hidden="true"><svg viewBox="0 0 1440 110" preserveAspectRatio="none"><path d="M0,40 C360,120 1080,-20 1440,60 L1440,110 L0,110 Z" fill="oklch(0.964 0.022 210)"/></svg></div>
+</header>
+
+<section class="band tint" id="problem">
+  <div class="wrap pad">
+    <span class="kicker">The gap</span>
+    <div class="twocol">
+      <p class="big reveal">Most buyers inspect a used car for under four minutes. The seller has had it for <u>years</u>.</p>
+      <p class="note reveal">One missed head-gasket, frame repair, or rolled-back odometer costs roughly a thousand times the price of this guide. The math makes the decision for you — you just need a calm way to get there.</p>
+    </div>
+  </div>
+  <div class="curve bot" aria-hidden="true"><svg viewBox="0 0 1440 110" preserveAspectRatio="none"><path d="M0,70 C420,-10 1020,130 1440,40 L1440,110 L0,110 Z" fill="oklch(0.992 0.006 220)"/></svg></div>
+</section>
+
+<section class="band white" id="inside">
+  <div class="wrap pad">
+    <span class="kicker">What's inside</span>
+    <h2 class="head reveal">Eleven gentle checkpoints, in the <span class="g">order you run them.</span></h2>
+    <div class="checks">
+      <div class="chk reveal"><div class="top"><span class="n">01</span><span class="t">5:00</span></div><h4>Documents &amp; VIN</h4><p>Title, registration, and every VIN cross-checked first.</p></div>
+      <div class="chk reveal"><div class="top"><span class="n">02</span><span class="t">3:00</span></div><h4>Body &amp; paint</h4><p>Panel gaps, repaint tells, filler, a straightened shell.</p></div>
+      <div class="chk reveal"><div class="top"><span class="n">03</span><span class="t">2:00</span></div><h4>Glass &amp; lights</h4><p>Mismatched date codes, fogged housings, crack origins.</p></div>
+      <div class="chk reveal"><div class="top"><span class="n">04</span><span class="t">3:00</span></div><h4>Tires &amp; brakes</h4><p>Wear patterns decoded into suspension &amp; frame state.</p></div>
+      <div class="chk reveal"><div class="top"><span class="n">05</span><span class="t">2:00</span></div><h4>Suspension &amp; steering</h4><p>The bounce test, the push test, the play that costs.</p></div>
+      <div class="chk reveal"><div class="top"><span class="n">06</span><span class="t">4:00</span></div><h4>Under the hood</h4><p>Belts, hoses, the oil cap, the over-clean warning.</p></div>
+      <div class="chk reveal"><div class="top"><span class="n">07</span><span class="t">3:00</span></div><h4>Fluids &amp; leaks</h4><p>Color, smell, level — each fluid's quiet report.</p></div>
+      <div class="chk reveal"><div class="top"><span class="n">08</span><span class="t">1:00</span></div><h4>Cold start &amp; idle</h4><p>The most diagnostic thirty seconds of the visit.</p></div>
+      <div class="chk reveal"><div class="top"><span class="n">09</span><span class="t">3:00</span></div><h4>Underbody &amp; rust</h4><p>Where rot starts and the repairs people mask.</p></div>
+      <div class="chk reveal"><div class="top"><span class="n">10</span><span class="t">3:00</span></div><h4>Interior &amp; electronics</h4><p>Wear vs. the odometer; every switch in 90 seconds.</p></div>
+      <div class="chk reveal"><div class="top"><span class="n">11</span><span class="t">12:00</span></div><h4>The test drive</h4><p>A repeatable route that surfaces the expensive faults.</p></div>
+      <div class="chk reveal" style="background:linear-gradient(150deg,color-mix(in oklab,var(--teal) 16%,var(--card)),color-mix(in oklab,var(--lav) 14%,var(--card)));display:flex;flex-direction:column;justify-content:center"><h4 style="margin-top:0">+ Red-flag index</h4><p>Every “walk away now” condition on one calm page.</p></div>
+    </div>
+  </div>
+  <div class="curve bot" aria-hidden="true"><svg viewBox="0 0 1440 110" preserveAspectRatio="none"><path d="M0,55 C480,140 960,-30 1440,55 L1440,110 L0,110 Z" fill="oklch(0.945 0.03 195)"/></svg></div>
+</section>
+
+<section class="band tint2">
+  <div class="wrap pad">
+    <div class="sample-grid">
+      <div class="reveal">
+        <span class="kicker">See it first</span>
+        <h2 class="head">A sheet you carry, not theory you memorize.</h2>
+        <p class="lede">Every checkpoint becomes a line you mark <b style="color:var(--ink)">Pass</b>, <b style="color:var(--ink)">Note</b>, or <b style="color:var(--ink)">Fail</b> while you stand at the car. Two fails in the critical set and the procedure says: walk.</p>
+        <a class="btn btn-soft" style="margin-top:var(--s-6)" href="assets/used-car-inspection-guide.pdf" target="_blank" rel="noopener">Download the free sample</a>
+      </div>
+      <div class="sheet reveal" aria-hidden="true">
+        <div class="st"><b>Under the hood</b><span>Checkpoint 06 · score sheet</span></div>
+        <ul>
+          <li><span>Oil cap underside — clean?</span><i class="mk p">P</i><i class="mk">N</i><i class="mk">F</i></li>
+          <li><span>Coolant color &amp; level</span><i class="mk">P</i><i class="mk">N</i><i class="mk f">F</i></li>
+          <li><span>Belts &amp; hoses condition</span><i class="mk p">P</i><i class="mk">N</i><i class="mk">F</i></li>
+          <li><span>Visible leaks at the seals</span><i class="mk">P</i><i class="mk">N</i><i class="mk f">F</i></li>
+          <li><span>Transmission fluid (pink?)</span><i class="mk p">P</i><i class="mk">N</i><i class="mk">F</i></li>
+          <li><span>Engine bay over-cleaned?</span><i class="mk">P</i><i class="mk">N</i><i class="mk f">F</i></li>
+        </ul>
+        <div class="verdict">Verdict — two fails: stop here. Renegotiate, or walk.</div>
+      </div>
+    </div>
+  </div>
+  <div class="curve bot" aria-hidden="true"><svg viewBox="0 0 1440 110" preserveAspectRatio="none"><path d="M0,50 C400,-20 1040,120 1440,45 L1440,110 L0,110 Z" fill="oklch(0.30 0.06 240)"/></svg></div>
+</section>
+
+<section class="band ink">
+  <div class="wrap pad">
+    <span class="kicker" style="background:oklch(1 0 0 /.12);color:#fff">Outcomes</span>
+    <h2 class="head reveal">It pays for itself before the engine starts.</h2>
+    <div class="quotes">
+      <figure class="quote reveal"><p>“Found frame repair the listing never mentioned. Walked away in two minutes.”</p><figcaption>— Replace with a real buyer quote</figcaption></figure>
+      <figure class="quote reveal"><p>“The oil-cap check caught coolant in the oil — a $3,000 mistake I didn't make.”</p><figcaption>— Replace with a real buyer quote</figcaption></figure>
+      <figure class="quote reveal"><p>“The script took $1,400 off the price. The sheet did the talking.”</p><figcaption>— Replace with a real buyer quote</figcaption></figure>
+    </div>
+  </div>
+  <div class="curve bot" aria-hidden="true"><svg viewBox="0 0 1440 110" preserveAspectRatio="none"><path d="M0,60 C460,140 980,-20 1440,55 L1440,110 L0,110 Z" fill="oklch(0.992 0.006 220)"/></svg></div>
+</section>
+
+<section class="band white" id="price">
+  <div class="wrap pad">
+    <span class="kicker">Pricing</span>
+    <h2 class="head reveal" style="margin-bottom:var(--s-7)">One price. <span class="g">Yours forever.</span></h2>
+    <div class="price-card reveal">
+      <div class="l">
+        <h3>Used Car Inspection Guide</h3>
+        <p style="color:var(--muted);margin-top:var(--s-3);max-width:40ch">The complete field edition — every checkpoint, the red-flag list, the printable score sheet, and the renegotiation scripts.</p>
+        <ul class="inc">
+          <li><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9.5l4 4 8-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>All 11 checkpoints, in running order</li>
+          <li><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9.5l4 4 8-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>The “walk away now” red-flag list</li>
+          <li><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9.5l4 4 8-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>A printable one-page score sheet</li>
+          <li><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9.5l4 4 8-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Word-for-word renegotiation scripts</li>
+          <li><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9.5l4 4 8-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Instant PDF — read on a phone or print</li>
+        </ul>
+      </div>
+      <div class="r">
+        <div class="amount"><sup>$</sup><b>6.99</b><span>USD · one-time</span></div>
+        <div class="gtee">7-day no-questions refund</div>
+        <button class="btn btn-primary" id="buyBtn" data-payment="wish" aria-controls="checkout" style="justify-content:center">Get the guide</button>
+        <p class="pay-note">Secure checkout via <b>Wish</b>. Payment isn't wired up yet — the button below is where it'll go live.</p>
+        <div id="checkout" aria-live="polite">
+          <div>
+            <h4>Pay with Wish</h4>
+            <p>Wish checkout mounts here once configured. For now, read the free sample so you know exactly what you're getting.</p>
+            <div class="cka">
+              <button class="btn btn-wish" disabled title="Wish payment not configured yet">Wish — coming soon</button>
+              <a class="btn btn-soft" href="assets/used-car-inspection-guide.pdf" target="_blank" rel="noopener">Read the free sample</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:var(--s-10)">
+      <span class="kicker">FAQ</span>
+      <h2 class="head reveal">Reasonable questions.</h2>
+      <div class="qa reveal">
+        <details><summary>Do I need tools or experience?<i></i></summary><div class="ans">No. The whole guide is built around what you can check with your eyes, your hands, a phone flashlight, and a short test drive. No jack, no scanner, no mechanical background assumed.</div></details>
+        <details><summary>Is it specific to one make or country?<i></i></summary><div class="ans">The checkpoints are universal — they're about how cars physically wear, not a particular brand. Document and title specifics vary by region; the guide explains what to verify so you can apply it locally.</div></details>
+        <details><summary>What format is it, and how do I get it?<i></i></summary><div class="ans">A PDF you can read on a phone or print as a one-page sheet to carry. After checkout you get an instant download — no account, no app.</div></details>
+        <details><summary>What if it doesn't help me?<i></i></summary><div class="ans">7-day refund, no questions. If running the checkpoints once doesn't make you more confident at the curb, you shouldn't pay for it.</div></details>
+      </div>
+    </div>
+  </div>
+  <div class="curve bot" aria-hidden="true"><svg viewBox="0 0 1440 110" preserveAspectRatio="none"><path d="M0,45 C420,120 1020,-20 1440,55 L1440,110 L0,110 Z" fill="oklch(0.964 0.022 210)"/></svg></div>
+</section>
+
+<footer class="band tint">
+  <div class="wrap pad">
+    <div class="foot">
+      <div><a class="brand" href="#top"><i></i> Under the Hood</a><small style="margin-top:10px">The calm 30-minute walkaround.</small></div>
+      <small style="text-align:right">© <span id="yr"></span> · This is a sample storefront.<br />Sample PDF — replace before launch.</small>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  const nav = document.getElementById("nav");
+  const onNav = () => nav.classList.toggle("scrolled", scrollY > 20);
+  onNav(); addEventListener("scroll", onNav, { passive: true });
+
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: 0.14 });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+  const book = document.getElementById("book");
+  if (book && !REDUCE && matchMedia("(pointer:fine)").matches) {
+    const stage = book.closest(".book-stage");
+    let raf = 0;
+    stage.addEventListener("pointermove", (e) => {
+      const r = stage.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+      if (raf) return;
+      raf = requestAnimationFrame(() => { raf = 0; book.style.animation = "none";
+        book.style.transform = `rotateX(${7 - py*11}deg) rotateY(${-24 + px*18}deg)`; });
+    });
+    stage.addEventListener("pointerleave", () => { book.style.animation = ""; book.style.transform = ""; });
+  }
+
+  const buy = document.getElementById("buyBtn"), ck = document.getElementById("checkout");
+  buy.addEventListener("click", () => {
+    const open = ck.classList.toggle("open");
+    buy.setAttribute("aria-expanded", open);
+    if (open) ck.scrollIntoView({ behavior: REDUCE ? "auto" : "smooth", block: "center" });
+  });
+})();
+</script>
+</body>
+</html>

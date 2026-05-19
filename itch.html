@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23222226'/%3E%3Crect x='7' y='9' width='18' height='14' rx='1' fill='%23fa5c5c'/%3E%3Crect x='7' y='9' width='18' height='4' fill='%23ff8a6a'/%3E%3C/svg%3E" />
+<title>Used Car Inspection Guide by Under the Hood</title>
+<meta name="description" content="A practical, no-nonsense field guide to inspecting a used car before you buy — 11 checkpoints, red flags, a printable score sheet. PDF, $6.99." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:     #18181b;
+    --bg-2:   #1f1f24;
+    --panel:  #26262c;
+    --panel-2:#2e2e35;
+    --line:   #3a3a42;
+    --ink:    #f4f4f5;
+    --body:   #c9c9d0;
+    --muted:  #9a9aa4;
+    --faint:  #74747e;
+    --coral:  #fa5c5c;
+    --coral-d:#e24a4a;
+    --good:   #69d083;
+    --bad:    #fa5c5c;
+    --link:   #ff8a6a;
+
+    --f: "Lato", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --m: "Spline Sans Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;
+    --s-6:32px;--s-7:48px;--s-8:64px;
+    --maxw:980px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--body);font-family:var(--f);
+    font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background-image:repeating-linear-gradient(45deg,#1b1b1f 0 2px,transparent 2px 9px)}
+  ::selection{background:var(--coral);color:#fff}
+  a{color:var(--link);text-decoration:none}
+  a:hover{text-decoration:underline}
+  h1,h2,h3,h4{color:var(--ink);font-weight:900;line-height:1.2;letter-spacing:-.01em}
+  img{display:block;max-width:100%}
+  .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(14px,3vw,22px)}
+
+  /* itch-style topbar */
+  .topbar{background:#101013;border-bottom:1px solid #000}
+  .topbar .in{display:flex;align-items:center;gap:20px;height:46px}
+  .logo{font-weight:900;color:#fff;font-size:1.05rem;display:flex;align-items:center;gap:7px}
+  .logo b{color:var(--coral)}
+  .topbar nav{display:flex;gap:18px;font-size:.86rem}
+  .topbar nav a{color:#c9c9d0}
+  .topbar nav a:hover{color:#fff;text-decoration:none}
+  .topbar .right{margin-left:auto;display:flex;gap:16px;font-size:.86rem}
+  @media(max-width:680px){.topbar nav{display:none}}
+
+  /* game header band */
+  .gh{background:linear-gradient(180deg,#2a1d1d,var(--bg) 70%);border-bottom:1px solid var(--line)}
+  .gh .in{padding-block:var(--s-7) var(--s-6)}
+  .gh h1{font-size:clamp(1.9rem,4.2vw,2.9rem);color:#fff}
+  .gh .by{margin-top:8px;color:var(--muted);font-size:1rem}
+  .gh .by a{font-weight:700}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:var(--s-5)}
+  .tag{font-size:.76rem;background:var(--panel);border:1px solid var(--line);color:var(--body);
+    padding:4px 11px;border-radius:3px}
+  .tag:hover{border-color:var(--coral);color:#fff;text-decoration:none}
+
+  /* layout: main + buy sidebar */
+  .game{display:grid;grid-template-columns:1fr 312px;gap:var(--s-7);padding-block:var(--s-7)}
+  @media(max-width:860px){.game{grid-template-columns:1fr}}
+
+  .cover{position:relative;border:1px solid var(--line);border-radius:4px;overflow:hidden;
+    background:linear-gradient(150deg,#3a2230,#201822);aspect-ratio:16/9;display:flex;
+    align-items:flex-end;padding:clamp(20px,3vw,34px)}
+  .cover::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(120% 90% at 80% 10%,rgba(250,92,92,.35),transparent 55%),
+      repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0 2px,transparent 2px 12px)}
+  .cover .ct{position:relative;z-index:1}
+  .cover .ct .mk{font-family:var(--m);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--coral)}
+  .cover .ct h2{font-size:clamp(1.6rem,4vw,2.6rem);color:#fff;margin-top:8px;line-height:1.05;max-width:16ch}
+  .cover .ct p{color:#d8d8de;margin-top:10px;max-width:42ch;font-size:.95rem}
+
+  .shots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+  .shots img{width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid var(--line);border-radius:3px;
+    cursor:zoom-in;transition:opacity .2s}
+  .shots img:hover{opacity:.85}
+
+  .desc{margin-top:var(--s-7)}
+  .desc h3{font-size:1.3rem;color:#fff;margin:var(--s-6) 0 var(--s-3);padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .desc h3:first-child{margin-top:0}
+  .desc p{margin:var(--s-3) 0;color:var(--body)}
+  .desc ul{margin:var(--s-3) 0 var(--s-3) 22px;display:flex;flex-direction:column;gap:7px}
+  .desc li{color:var(--body)}
+  .desc li b{color:var(--ink)}
+  .desc .callout{background:var(--panel);border-left:3px solid var(--coral);padding:14px 18px;border-radius:0 4px 4px 0;color:var(--ink);margin:var(--s-5) 0}
+
+  /* score sheet block */
+  .sheet{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:clamp(18px,2.5vw,26px);margin-top:var(--s-5)}
+  .sheet .st{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--line);padding-bottom:11px;margin-bottom:14px}
+  .sheet .st b{color:#fff;font-size:1.05rem}
+  .sheet .st span{font-family:var(--m);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  .sheet ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin:0}
+  .sheet li{display:grid;grid-template-columns:1fr auto auto auto;gap:7px;align-items:center;padding-bottom:9px;border-bottom:1px dashed var(--line);color:var(--body)}
+  .sheet .mk{font-family:var(--m);font-size:.56rem;width:24px;text-align:center;padding:4px 0;border:1px solid var(--line);border-radius:3px;color:var(--faint)}
+  .sheet .mk.p{border-color:var(--good);color:var(--good)}
+  .sheet .mk.f{border-color:var(--bad);color:var(--bad)}
+  .sheet .vd{margin-top:13px;font-family:var(--m);font-size:.64rem;letter-spacing:.04em;color:var(--coral)}
+
+  /* devlog */
+  .devlog{margin-top:var(--s-7)}
+  .devlog .row{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .devlog .dot{width:9px;height:9px;border-radius:50%;background:var(--coral);margin-top:6px;flex:none}
+  .devlog .row b{color:#fff;display:block}
+  .devlog .row time{font-family:var(--m);font-size:.72rem;color:var(--faint)}
+  .devlog .row p{font-size:.9rem;margin-top:4px;color:var(--muted)}
+
+  /* more information table */
+  .info{margin-top:var(--s-7);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .info .ih{background:var(--panel);padding:10px 16px;font-weight:700;color:#fff;font-size:.92rem;border-bottom:1px solid var(--line)}
+  .info dl{display:grid;grid-template-columns:140px 1fr}
+  .info dt{padding:9px 16px;color:var(--muted);font-size:.86rem;border-bottom:1px solid var(--line);background:var(--bg-2)}
+  .info dd{padding:9px 16px;color:var(--ink);font-size:.86rem;border-bottom:1px solid var(--line)}
+  .info dl>:nth-last-child(1),.info dl>:nth-last-child(2){border-bottom:none}
+
+  .comments{margin-top:var(--s-7);padding-top:var(--s-6);border-top:1px solid var(--line)}
+  .comments h3{color:#fff;font-size:1.2rem}
+  .cbox{margin-top:var(--s-4);background:var(--panel);border:1px solid var(--line);border-radius:4px;
+    padding:14px;color:var(--faint);font-size:.9rem}
+
+  /* buy sidebar */
+  .buy{align-self:start;position:sticky;top:14px}
+  .buybox{background:var(--panel);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .buybox .hd{background:var(--coral);color:#fff;font-weight:900;text-align:center;padding:13px;font-size:1.05rem;letter-spacing:.01em}
+  .buybox .bd{padding:18px}
+  .price{display:flex;align-items:baseline;gap:8px;justify-content:center;margin-bottom:14px}
+  .price b{font-size:2.2rem;font-weight:900;color:#fff}
+  .price s{color:var(--faint);font-size:1rem}
+  .buybtn{display:block;width:100%;text-align:center;background:var(--coral);color:#fff;font-weight:900;
+    font-size:1.05rem;padding:14px;border:none;border-radius:3px;cursor:pointer;
+    box-shadow:0 4px 0 var(--coral-d);transition:transform .12s,box-shadow .12s;font-family:var(--f)}
+  .buybtn:hover{transform:translateY(-1px);box-shadow:0 5px 0 var(--coral-d);text-decoration:none}
+  .buybtn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--coral-d)}
+  .buybox .alt{display:block;text-align:center;margin-top:11px;font-size:.88rem;color:var(--link)}
+  .buybox .meta{margin-top:16px;border-top:1px solid var(--line);padding-top:14px;
+    display:flex;flex-direction:column;gap:8px;font-size:.84rem;color:var(--muted)}
+  .buybox .meta span{display:flex;justify-content:space-between;gap:10px}
+  .buybox .meta b{color:var(--ink);font-weight:700}
+  #checkout{margin-top:12px;display:grid;grid-template-rows:0fr;opacity:0;
+    transition:grid-template-rows .45s ease,opacity .35s}
+  #checkout.open{grid-template-rows:1fr;opacity:1}
+  #checkout>div{overflow:hidden;min-height:0}
+  #checkout .ck{background:var(--bg-2);border:1px solid var(--line);border-radius:3px;padding:14px;margin-top:6px}
+  #checkout h4{color:#fff;font-size:.98rem;margin-bottom:6px}
+  #checkout p{font-size:.84rem;color:var(--muted)}
+  #checkout .wish{margin-top:11px;width:100%;text-align:center;background:var(--panel-2);border:1px solid var(--coral);
+    color:var(--coral);font-weight:700;padding:11px;border-radius:3px;cursor:not-allowed;opacity:.85;font-family:var(--f);font-size:.92rem}
+
+  footer{border-top:1px solid var(--line);margin-top:var(--s-8);padding-block:var(--s-6)}
+  footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
+    font-family:var(--m);font-size:.72rem;color:var(--faint)}
+  footer a{color:var(--muted)}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){
+    *{scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none;transition:none}
+    .buybtn:active{transform:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap in">
+    <span class="logo">under<b>.</b>hood</span>
+    <nav><a href="#">Browse</a><a href="#">Bundles</a><a href="#">Devlogs</a><a href="#">Community</a></nav>
+    <div class="right"><a href="#">Log in</a><a href="#">Register</a></div>
+  </div>
+</div>
+
+<header class="gh">
+  <div class="wrap in">
+    <h1>Used Car Inspection Guide</h1>
+    <div class="by">A practical PDF field guide by <a href="#">Under the Hood</a></div>
+    <div class="tags">
+      <a class="tag" href="#">guide</a><a class="tag" href="#">automotive</a><a class="tag" href="#">checklist</a>
+      <a class="tag" href="#">pdf</a><a class="tag" href="#">practical</a><a class="tag" href="#">buying</a><a class="tag" href="#">printable</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap game">
+  <div class="content">
+    <div class="cover">
+      <div class="ct">
+        <span class="mk">Field Edition · v2.0</span>
+        <h2>Don't buy someone else's problem.</h2>
+        <p>The 12-minute walkaround that finds the one reason to walk away — before the money moves.</p>
+      </div>
+    </div>
+
+    <div class="shots">
+      <img src="assets/img/engine.jpg" alt="Engine bay checkpoint" loading="lazy" decoding="async" />
+      <img src="assets/img/tire.jpg" alt="Tire wear checkpoint" loading="lazy" decoding="async" />
+      <img src="assets/img/interior.jpg" alt="Interior checkpoint" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="desc">
+      <h3>About this guide</h3>
+      <p>Most buyers inspect a used car for under four minutes. The person selling it has lived with it for years. This guide closes that gap with a calm, ordered procedure you can run in any parking lot — no tools, no scanner, no mechanical background required.</p>
+      <div class="callout">One missed head-gasket, frame repair, or rolled-back odometer costs roughly a thousand times the price of this guide. The math makes the decision for you.</div>
+
+      <h3>What's inside</h3>
+      <ul>
+        <li><b>11 checkpoints</b>, in the exact order you run them — cheapest checks first, deal-enders before you fall in love with the car.</li>
+        <li><b>The “walk away now” red-flag list</b> — the conditions that end the conversation.</li>
+        <li><b>A printable one-page score sheet</b> — mark Pass / Note / Fail at the car.</li>
+        <li><b>Word-for-word renegotiation scripts</b> — the sheet does the talking.</li>
+        <li><b>Instant PDF</b> — read on a phone or print. Yours forever.</li>
+      </ul>
+
+      <h3>Sample: checkpoint 06 score sheet</h3>
+      <div class="sheet" aria-hidden="true">
+        <div class="st"><b>Under the hood</b><span>Checkpoint 06 · score sheet</span></div>
+        <ul>
+          <li><span>Oil cap underside — clean?</span><i class="mk p">P</i><i class="mk">N</i><i class="mk">F</i></li>
+          <li><span>Coolant color &amp; level</span><i class="mk">P</i><i class="mk">N</i><i class="mk f">F</i></li>
+          <li><span>Belts &amp; hoses condition</span><i class="mk p">P</i><i class="mk">N</i><i class="mk">F</i></li>
+          <li><span>Visible leaks at the seals</span><i class="mk">P</i><i class="mk">N</i><i class="mk f">F</i></li>
+          <li><span>Transmission fluid (pink?)</span><i class="mk p">P</i><i class="mk">N</i><i class="mk">F</i></li>
+          <li><span>Engine bay over-cleaned?</span><i class="mk">P</i><i class="mk">N</i><i class="mk f">F</i></li>
+        </ul>
+        <div class="vd">Verdict — two fails: stop here. Renegotiate, or walk.</div>
+      </div>
+
+      <h3>Why buyers keep it in the glovebox</h3>
+      <ul>
+        <li>“Found frame repair the listing never mentioned. Walked away in two minutes.”</li>
+        <li>“The oil-cap check caught coolant in the oil — a $3,000 mistake I didn't make.”</li>
+        <li>“The script took $1,400 off the price. The sheet did the talking.”</li>
+      </ul>
+      <p style="color:var(--faint);font-size:.84rem">↑ Replace with real buyer quotes before launch.</p>
+    </div>
+
+    <div class="devlog">
+      <h3 style="color:#fff;font-size:1.3rem;border-bottom:1px solid var(--line);padding-bottom:6px">Devlog</h3>
+      <div class="row"><span class="dot"></span><div><b>v2.0 — Renegotiation scripts added</b><time>Field Edition</time><p>New word-for-word scripts for using a failed checkpoint to take money off the price.</p></div></div>
+      <div class="row"><span class="dot"></span><div><b>v1.4 — Printable one-page sheet</b><time>Field Edition</time><p>The whole procedure now fits on a single page you can carry to the car.</p></div></div>
+    </div>
+
+    <div class="info">
+      <div class="ih">More information</div>
+      <dl>
+        <dt>Status</dt><dd>Released</dd>
+        <dt>Category</dt><dd>Guide · Reference</dd>
+        <dt>Author</dt><dd>Under the Hood</dd>
+        <dt>Format</dt><dd>PDF (phone &amp; print)</dd>
+        <dt>Length</dt><dd>11 checkpoints · ~30 min at the car</dd>
+        <dt>Edition</dt><dd>Field Edition v2.0</dd>
+        <dt>Languages</dt><dd>English</dd>
+        <dt>License</dt><dd>Personal use · 7-day refund</dd>
+      </dl>
+    </div>
+
+    <div class="comments">
+      <h3>Comments</h3>
+      <div class="cbox">Comments are a sample placeholder for this storefront. Real buyer reviews would appear here.</div>
+    </div>
+  </div>
+
+  <aside class="buy">
+    <div class="buybox">
+      <div class="hd">Buy this guide</div>
+      <div class="bd">
+        <div class="price"><b>$6.99</b><s>USD</s></div>
+        <button class="buybtn" id="buyBtn" data-payment="wish" aria-controls="checkout">Buy Now $6.99 USD</button>
+        <a class="alt" href="assets/used-car-inspection-guide.pdf" target="_blank" rel="noopener">Download free sample →</a>
+        <div id="checkout" aria-live="polite">
+          <div>
+            <div class="ck">
+              <h4>Pay with Wish</h4>
+              <p>Wish checkout mounts here once configured. For now, grab the free sample so you know exactly what you're getting.</p>
+              <button class="wish" disabled title="Wish payment not configured yet">Wish — coming soon</button>
+            </div>
+          </div>
+        </div>
+        <div class="meta">
+          <span>Status <b>Released</b></span>
+          <span>Format <b>PDF</b></span>
+          <span>Length <b>11 checkpoints</b></span>
+          <span>Refund <b>7-day</b></span>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:12px;font-size:.78rem;color:var(--faint);text-align:center">Secure checkout via Wish · instant download</p>
+  </aside>
+</main>
+
+<footer>
+  <div class="wrap in">
+    <span>© <span id="yr"></span> under.hood — sample storefront</span>
+    <span>Photography via Unsplash (free) · Sample PDF — replace before launch · <a href="assets/used-car-inspection-guide.pdf" target="_blank" rel="noopener">sample.pdf</a></span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+  const buy = document.getElementById("buyBtn"), ck = document.getElementById("checkout");
+  buy.addEventListener("click", () => {
+    const open = ck.classList.toggle("open");
+    buy.setAttribute("aria-expanded", open);
+    if (open) ck.scrollIntoView({ behavior: REDUCE ? "auto" : "smooth", block: "nearest" });
+  });
+})();
+</script>
+</body>
+</html>
